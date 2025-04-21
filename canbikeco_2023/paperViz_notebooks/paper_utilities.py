@@ -265,6 +265,7 @@ def make_ebike_proportion_chart(df, count, col, plot_title, ylab, xlab, file_nam
 
     fig, ax = plt.subplots(figsize=(6,4))
     sns.barplot(data=plot_data, x=col, y='proportion', estimator=np.mean).set(title=plot_title,xlabel=xlab ,ylabel=ylab)
-    plt.xticks(rotation=35, ha='right')
+    plt.xticks(rotation=35, ha='right', fontsize=12)
+    plt.yticks(fontsize=12)
     plt.subplots_adjust(bottom=0.25)
     ax.figure.savefig(file_name+".png", bbox_inches='tight')
