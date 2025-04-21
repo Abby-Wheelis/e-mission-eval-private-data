@@ -214,15 +214,17 @@ def make_occupation_chart(df, plot_title, filename):
 
 #input: data to plot, column of interest, title, and y axis label
 #makes a box plot of data along given column
-def make_distribution_plot(df, col, plot_title, ylab):
+def make_distribution_plot(df, col, plot_title, ylab, xlab):
     plot_data = df.copy()
     sns.set_palette('Set1', 9)
 
     fig, ax = plt.subplots(figsize=(10,8))
-    sns.boxplot(ax=ax, data=plot_data, x='Mode_confirm', y=col, hue='Mode_confirm', showfliers=False).set(title=plot_title, xlabel='', ylabel=ylab)
+    sns.boxplot(ax=ax, data=plot_data, x='Mode_confirm', y=col, hue='Mode_confirm', showfliers=False).set(title=plot_title, xlabel=xlab, ylabel=ylab)
     plt.subplots_adjust(bottom=0.25)
     plt.xticks(rotation=35, ha='right')
     plt.legend([])
+    #save as file
+    plt.savefig(plot_title+".jpeg", bbox_inches='tight')
     
 #https://stackoverflow.com/questions/41296313/stacked-bar-chart-with-centered-labels
 def make_stacked_bars(df, title, xlabel, ylabel, filename):
@@ -242,7 +244,7 @@ def make_stacked_bars(df, title, xlabel, ylabel, filename):
     plt.savefig(filename, bbox_inches='tight')
     
 #input: data, boolean to count if True and sum if false, column of interest, and strings for title labels and filename
-def make_ebike_proportion_chart(df, count, col, plot_title, ylab, file_name):
+def make_ebike_proportion_chart(df, count, col, plot_title, ylab, xlab, file_name):
     plot_data = df.copy()[['user_id','Mode_confirm','distance_miles']]
 
     t1 = plot_data.groupby(['user_id','Mode_confirm'], as_index=False).count()
@@ -262,7 +264,7 @@ def make_ebike_proportion_chart(df, count, col, plot_title, ylab, file_name):
     plot_data = plot_data.merge(t3, on='user_id')
 
     fig, ax = plt.subplots(figsize=(6,4))
-    sns.barplot(data=plot_data, x=col, y='proportion', estimator=np.mean).set(title=plot_title,xlabel='',ylabel=ylab)
+    sns.barplot(data=plot_data, x=col, y='proportion', estimator=np.mean).set(title=plot_title,xlabel=xlab ,ylabel=ylab)
     plt.xticks(rotation=35, ha='right')
     plt.subplots_adjust(bottom=0.25)
     ax.figure.savefig(file_name+".png", bbox_inches='tight')
